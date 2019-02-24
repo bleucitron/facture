@@ -1,0 +1,54 @@
+{
+  "name": "facture",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build:css": "node-sass style.scss style.css | postcss style.css -u autoprefixer -r",
+    "watch:css": "npm-watch build:css ",
+    "build:jsx": "babel index.jsx -d . --source-maps inline",
+    "watch:jsx": "babel index.jsx -d . --watch --source-maps inline",
+    "watch:js": "npm-watch generate:debug",
+    "generate": "node -r esm index.js -c NAT -o '/Users/Romain/Documents/Micro Entreprise/' ",
+    "generate:debug": "node -r esm index.js -d",
+    "sync": "browser-sync start --s -f '*.css,*.html' -b 'google chrome'",
+    "start": "npm-run-all --parallel watch:* sync"
+  },
+  "watch": {
+    "generate:debug": {
+      "patterns": [
+        "index.js",
+        "style.css"
+      ]
+    },
+    "build:css": "style.scss"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "commander": "^2.19.0",
+    "d3-format": "^1.3.2",
+    "esm": "^3.2.6",
+    "html-pdf": "^2.2.0",
+    "js-yaml": "^3.12.1",
+    "jsdom": "^13.2.0",
+    "luxon": "^1.11.3",
+    "markdown-to-jsx": "^6.9.1",
+    "react": "^16.8.3",
+    "react-dom": "^16.8.3"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.2.3",
+    "@babel/core": "^7.3.3",
+    "@babel/preset-env": "^7.3.1",
+    "@babel/preset-react": "^7.0.0",
+    "autoprefixer": "^9.4.8",
+    "browser-sync": "^2.26.3",
+    "node-sass": "^4.11.0",
+    "npm-run-all": "^4.1.5",
+    "npm-watch": "^0.6.0",
+    "pngjs": "^3.3.3",
+    "postcss-cli": "^6.1.2"
+  }
+}

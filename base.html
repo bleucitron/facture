@@ -1,0 +1,68 @@
+<!doctype html>
+<html>
+<head>
+  <title>Facture</title>
+  <meta charset="utf-8" />
+  <link id='style' rel="stylesheet" type="text/css" href="./style.css">
+  <link id='style' rel="stylesheet" type="text/css" href="file:///Users/Romain/Code/perso/facture/style.css">
+</head>
+
+<body>
+  <header>
+    <section id='me'>
+      <div></div>
+      <div></div>
+    </section>
+    <section id='client'>
+      <div></div>
+      <div></div>
+      <div></div>
+    </section>
+    <section id='info'>
+      <div id='date'></div>
+      <div id='id'></div>
+      <div id='label'></div>
+    </section>
+  </header>
+  <main id='main'>
+    <section id='items' class='items'>
+      <div id='headers' class='headers'>
+        <div>Description</div>
+        <div>Prix unitaire HT</div>
+        <div>Quantité</div>
+        <div>Prix</div>
+      </div>
+      <div id='items'></div>
+      <div id='total-ht' class='total-ht'>
+        <div>Total HT</div>
+        <div class='price'></div>
+      </div>
+      <div id='taxes' class='taxes'>
+        <div>TVA Exonérée</div>
+        <div></div>
+      </div>
+      <div id='total-ttc' class='total-ttc'>
+        <div>Total TTC</div>
+        <div class='price'></div>
+      </div>
+    </section>
+    <section id='payment'>
+      Par virement à réception de la présente facture
+      <p id='bank'></p>
+      <p id='iban'></p>
+      <p id='bic'></p>
+    </section>
+    <section id='delay'>
+      Tout paiement différé entraîne l'application d'un intérêt de retard au taux de 15% annuel et d'une indemnité
+      forfaitaire de 40 €. Le paiement anticipé ne donne droit à aucun escompte.
+      Les acomptes facturés ne sont pas des arrhes et ne permettent pas de renoncer au marché.
+    </section>
+  </main>
+  <footer>
+    <p class='name'></p>
+    <p class='siret'></p>
+    <p class='address'></p>
+  </footer>
+</body>
+
+</html>

@@ -1,0 +1,7 @@
+node_modules
+index.html
+data/clients.yaml
+data/invoices.yaml
+data/items.yaml
+data/provider.yaml
+*.pdf

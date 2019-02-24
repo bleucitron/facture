@@ -1,0 +1,7 @@
+# Registre des clients
+'client1':
+  name: 'My Client 1'
+  address: 'Somewhere along the road'
+  zip: 'of'
+  city: 'fame'
+  code: 'XXX'

@@ -1,0 +1,210 @@
+$dark-grey: #333;
+$light-grey: #bbb;
+$very-light-grey: #eee;
+
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  zoom: 0.55;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  flex: 1 0;
+  height: 1510px;
+  padding: 1.5rem;
+  font-family: 'Courier';
+  font-size: 1rem;
+}
+
+h2 {
+  margin: 0;
+  font-size: .9rem;
+  background-color: $dark-grey;
+  color: white;
+}
+
+section {
+  margin: 2rem 0;
+}
+
+main {
+  height: 65%;
+}
+
+.image {
+  display: flex;
+  flex-direction: row-reverse;
+
+  img {
+    width: 80px;
+    height: 80px;
+  }
+}
+
+header {
+  font-size: 2rem;
+  text-align: center;
+
+  .description {
+    font-size: 1.2rem;
+  }
+}
+
+.client {
+  margin-top: 0;
+  margin-bottom: 10rem;
+  font-size: 1.1rem;
+  text-align: center;
+}
+
+.invoice {
+  font-size: 1.1rem;
+  font-weight: bold;
+
+  span {
+    margin-right: .5rem;
+    color: $light-grey;
+    font-weight: normal;
+  }
+}
+
+.items {
+  margin: .5rem 0;
+
+  .item, .headers {
+    display: flex;
+
+    > div, > span {
+      display: block;
+      padding: .3rem .5rem;
+      border-right: 1px solid white;
+      box-sizing: border-box;
+      text-align: right;
+
+      &:last-child {
+        border: none;
+      }
+
+      &.description {
+        flex: 1 0;
+        text-align: left;
+      }
+
+      &.quantity {
+        width: 6rem;
+      }
+
+      &.price {
+        width: 9rem;
+      }
+    }
+  }
+
+  .item {
+    .description {
+      p, ul {
+        margin: 0;
+      }
+    }
+
+    &:nth-child(even) {
+      background-color: rgba($very-light-grey, .5);
+    }
+
+    &:nth-child(odd) {
+      background-color: $very-light-grey;
+    }
+  }
+
+  .totals {
+    margin-top: 2rem;
+    margin-bottom: 4rem;
+
+    > div {
+      display: flex;
+      justify-content: flex-end;
+      margin: .5rem;
+      text-align: right;
+
+      .price, .vat {
+        width: 13rem;
+        margin-left: 1rem;
+      }
+    }
+
+    .taxes.zero {
+      color: $light-grey;
+      font-style: italic;
+    }
+
+    .ttc {
+      margin-top: 1.2rem;
+      font-size: 1.5rem;
+      font-weight: 700;
+    }
+
+  }
+}
+
+.payment {
+  background-color: $very-light-grey;
+
+  h2 {
+    padding: .3rem .5rem;
+    background-color: $dark-grey;
+  }
+
+  > div {
+    padding: .3rem .5rem;
+  }
+
+  .bankDetails {
+    margin: .9rem 0;
+    text-align: center;
+
+    span {
+      margin-right: .5rem;
+      color: $light-grey;
+    }
+  }
+
+  .delay {
+    text-align: justify;
+  }
+}
+
+.provider {
+  padding: .3rem .5rem;
+  text-align: center;
+  background-color: $dark-grey;
+  color: $very-light-grey;
+
+  span {
+    margin-right: .5rem;
+  }
+}
+
+footer {
+  display: flex;
+  justify-content: space-between;
+  margin-top: .5rem;
+  color: $dark-grey;
+
+  > div {
+    flex: 1 0;
+
+    &:nth-child(2) {
+      text-align: center;
+    }
+
+    &:last-child {
+      text-align: right;
+    }
+  }
+}
