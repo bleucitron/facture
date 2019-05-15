@@ -1,7 +1,5 @@
 node_modules
-index.html
-index.js
-style.css
+build
 data/clients.yaml
 data/invoices.yaml
 data/items.yaml

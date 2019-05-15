@@ -7,7 +7,7 @@ const heightNb = 18;
 const imgName = 'pokemon';
 
 fs
-.createReadStream(`./images/${imgName}.png`)
+.createReadStream(`../images/${imgName}.png`)
 .pipe(new PNG())
 .on('parsed', function () {
   const width = this.width / widthNb;

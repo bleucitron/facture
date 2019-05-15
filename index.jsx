@@ -1,6 +1,7 @@
 import fs from 'fs';
 import program from 'commander';
 import yaml from 'js-yaml';
+import path from 'path';
 import { JSDOM } from 'jsdom';
 import React from 'react';
 import ReactDOMServer from 'react-dom/server';
@@ -32,7 +33,8 @@ const invoices = yaml.safeLoad(fs.readFileSync('./data/invoices.yaml'), 'utf8') 
 const sprites = fs.readdirSync('./images/sprites/').filter(path => path.endsWith('.png'));
 const randomId = Math.floor(Math.random() * (sprites.length - 1));
 
-const randomSprite = `file://${__dirname}/images/sprites/${sprites[randomId]}`;
+const pathImage = path.join(__dirname, '..', `images/sprites/${ sprites[randomId]}`);
+const randomSprite = `file://${pathImage}`;
 
 const dateArray = DateTime.local().toISO().split('T')[0].split('-');
 
@@ -226,14 +228,14 @@ var options = {
   // },
 };
 
-fs.writeFileSync('./index.html', dom.serialize());
+fs.writeFileSync('./build/index.html', dom.serialize());
 
 if (!program.debug)
   fs.writeFileSync('./data/invoices.yaml', yaml.safeDump(invoices));
 
-const path = program.outputDir || '.';
+const outputDir = program.outputDir || '.';
 
-pdf.create(dom.serialize(), options).toFile(`${path}/${label}.pdf`, function (err, res) {
+pdf.create(dom.serialize(), options).toFile(`${outputDir}/${label}.pdf`, function (err, res) {
   if (err) return console.log(err);
   console.log(res);
 });
