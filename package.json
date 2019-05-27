@@ -7,7 +7,7 @@
     "build:css": "node-sass style.scss build/style.css | postcss build/style.css -u autoprefixer -r",
     "watch:css": "npm-watch build:css ",
     "build:jsx": "babel index.jsx -d build --source-maps inline",
-    "watch:jsx": "babel index.jsx -d build --watch --source-maps inline",
+    "watch:jsx": "babel **/*.jsx index.jsx -d build --watch --source-maps inline --verbose",
     "watch:js": "npm-watch generate:debug",
     "generate": "node -r esm build/index.js -c NAT -o '/Users/Romain/Documents/Micro Entreprise/' ",
     "generate:debug": "node -r esm build/index.js -d",
@@ -17,9 +17,9 @@
   "watch": {
     "generate:debug": {
       "patterns": [
-        "index.js",
-        "style.css"
-      ]
+        "build"
+      ],
+      "extensions": "js, css"
     },
     "build:css": "style.scss"
   },

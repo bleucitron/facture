@@ -1,13 +1,15 @@
 import React from 'react';
 import { DateTime } from 'luxon';
 
-const Infos = ({ id, label }) => {
-  const date = DateTime.local().toISO().split('T')[0].split('-').reverse().join('/');
+const Infos = ({ id, label, date }) => {
   return (
     <section className='info'>
-      <div className='date'>{date}</div>
+      <div className='date'>
+        <span>Date</span>
+        {date}
+      </div>
       <div className='id'>
-        <span>Facture n:</span>
+        <span>Facture nº</span>
         {id}
       </div>
       <div className='label'>
