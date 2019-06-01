@@ -11,12 +11,12 @@ export function displayItems(items) {
     const qty = quantity.toString().bold;
     const price = `${unitPrice.toString()}€`.bold;
     console.log(`${title.bold} qty: ${qty} price: ${price}`);
-    console.log();
     console.log(description.replace('\n\n', '\n'));
   });
 
   const total = items.reduce((acc, { unitPrice, quantity }) => acc + unitPrice * quantity, 0);
   const qty = items.length.toString().bold;
   const price = `${total.toString()}€`.bold;
+  console.log();
   console.log(`This invoice has ${qty} items, for a total of ${price}.`)
 }
