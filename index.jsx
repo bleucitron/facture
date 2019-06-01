@@ -1,6 +1,6 @@
-import fs from 'fs';
+import { readFileSync, writeFileSync } from 'fs';
 import program from 'commander';
-import yaml from 'js-yaml';
+import { safeLoad, safeDump } from 'js-yaml';
 import { JSDOM } from 'jsdom';
 import React from 'react';
 import ReactDOMServer from 'react-dom/server';
@@ -11,10 +11,14 @@ import colors from 'colors';
 
 import Invoice from './Invoice';
 
-const provider = yaml.safeLoad(fs.readFileSync('./data/provider.yaml'), 'utf8');
-const clients = yaml.safeLoad(fs.readFileSync('./data/clients.yaml'), 'utf8');
-const items = yaml.safeLoad(fs.readFileSync('./data/items.yaml'), 'utf8');
-const invoices = yaml.safeLoad(fs.readFileSync('./data/invoices.yaml'), 'utf8') || [];
+function fromYaml(file) {
+  return safeLoad(readFileSync(file), 'utf8');
+}
+
+const provider = fromYaml('./data/provider.yaml');
+const clients = fromYaml('./data/clients.yaml');
+const items = fromYaml('./data/items.yaml');
+const invoices = fromYaml('./data/invoices.yaml') || [];
 
 program
   .version('0.1.0')
@@ -75,7 +79,7 @@ inquirer
   console.log();
   console.log(`Generating invoice #${id}, ${label.bold}...`);
 
-  const html = fs.readFileSync('./base.html');
+  const html = readFileSync('./base.html');
 
   const invoice = {
     id,
@@ -104,10 +108,10 @@ inquirer
     // },
   };
 
-  fs.writeFileSync('./build/index.html', dom.serialize());
+  writeFileSync('./build/index.html', dom.serialize());
 
   if (!program.debug)
-    fs.writeFileSync('./data/invoices.yaml', yaml.safeDump(invoices));
+    writeFileSync('./data/invoices.yaml', safeDump(invoices));
 
   const outputDir = program.outputDir || '.';
 
