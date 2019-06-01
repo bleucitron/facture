@@ -8,6 +8,7 @@ import { DateTime } from 'luxon';
 import pdf from 'html-pdf';
 import inquirer from 'inquirer';
 import colors from 'colors';
+import rc from 'rc';
 
 import { displayItems } from '../utils';
 import Invoice from './Invoice';
@@ -23,7 +24,6 @@ const invoices = fromYaml('./data/invoices.yaml') || [];
 
 program
   .version('0.1.0')
-  .option('-o, --output-dir <output-dir>', 'Output Directory')
   .option('-d, --debug', 'Debug mode')
   .parse(process.argv);
 
@@ -98,9 +98,9 @@ inquirer
   if (!program.debug)
     writeFileSync('./data/invoices.yaml', safeDump(invoices));
 
-  const outputDir = program.outputDir || '.';
+  const dir = program.debug ? '.' : rc('facture').outputDir;
 
-  pdf.create(dom.serialize(), options).toFile(`${outputDir}/${label}.pdf`, function (err, res) {
+  pdf.create(dom.serialize(), options).toFile(`${dir}/${label}.pdf`, function (err, res) {
     if (err) return console.log(err);
     console.log(res.filename.green);
   });

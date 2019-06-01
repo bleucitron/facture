@@ -9,7 +9,7 @@
     "build:jsx": "babel index.jsx -d build --source-maps inline",
     "watch:jsx": "babel **/*.jsx -d build --watch --source-maps inline --verbose",
     "watch:js": "npm-watch generate:debug",
-    "generate": "node -r esm build/index.js -c NAT -o '/Users/Romain/Documents/Micro Entreprise/' ",
+    "generate": "node -r esm build/index.js",
     "generate:debug": "node -r esm build/index.js -d",
     "sync": "browser-sync start -s 'build' -f 'build' -b 'google chrome'",
     "start": "npm-run-all --parallel watch:* sync"
@@ -37,6 +37,7 @@
     "jsdom": "^13.2.0",
     "luxon": "^1.11.3",
     "markdown-to-jsx": "^6.9.1",
+    "rc": "^1.2.8",
     "react": "^16.8.3",
     "react-dom": "^16.8.3"
   },
