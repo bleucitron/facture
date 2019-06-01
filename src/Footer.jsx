@@ -4,7 +4,7 @@ import path from 'path';
 
 import Provider from './Provider';
 
-import getFullName from '../utils/getFullName';
+import { getFullName } from '../utils';
 
 const sprites = fs.readdirSync('./images/sprites/').filter(path => path.endsWith('.png'));
 const randomId = Math.floor(Math.random() * (sprites.length - 1));

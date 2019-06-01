@@ -1,6 +1,6 @@
 import React from 'react';
 
-import getFullName from '../utils/getFullName';
+import { getFullName } from '../utils';
 
 const Header = ({ description, ...rest }) => (
   <header>
