@@ -12,7 +12,8 @@
     "generate": "node -r esm build/index.js",
     "generate:debug": "node -r esm build/index.js -d",
     "sync": "browser-sync start -s 'build' -f 'build' -b 'google chrome'",
-    "start": "npm-run-all --parallel watch:* sync"
+    "start": "npm-run-all --parallel watch:* sync",
+    "total": "node -r esm total.js"
   },
   "watch": {
     "generate:debug": {
