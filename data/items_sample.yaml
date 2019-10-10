@@ -1,7 +1,7 @@
 # Items description
-- description: 'Light saber'
+- description: Light saber
   unitPrice: 2000.
   quantity: 1
-- description: 'Another very expensive item with a very long text. Another very expensive item with a very long text. Another very expensive item with a very long text. Another very expensive item with a very long text. Another very expensive item with a very long text. Another very expensive item with a very long text.'
+- description: Another very expensive item with a very long text. Another very expensive item with a very long text. Another very expensive item with a very long text. Another very expensive item with a very long text. Another very expensive item with a very long text. Another very expensive item with a very long text.
   unitPrice: 10000.0
   quantity: 3

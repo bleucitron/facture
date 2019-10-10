@@ -1,15 +1,14 @@
 # Who edited the invoice
-firstName: 'Darth'
-familyName: 'Vader'
-description: 'Sith Lord'
-email: 'd.vader@galacticempire.com'
-phone: '+0 987 654 321'
-address: '1 Force Str.'
-zip: '99999'
-city: 'Death Star'
-siret: '999 999 999 999 999'
+firstName: Darth
+familyName: Vader
+description: Sith Lord
+email: d.vader@galacticempire.com
+phone: +0 987 654 321
+address: 1 Force Str.
+zip: 99999
+city: Death Star
+siret: 999 999 999 999 999
 bankDetails:
-  iban: 'XXXX XXXX XXXX XXXX XXXX'
-  bic: 'XXXXXXX'
-  bank: 'Bank of the Sith'
-
+  iban: XXXX XXXX XXXX XXXX XXXX
+  bic: XXXXXXX
+  bank: Bank of the Sith
