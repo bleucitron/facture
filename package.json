@@ -7,7 +7,7 @@
     "build:css": "node-sass style.scss build/style.css",
     "postbuild:css": "postcss build/style.css -r -u autoprefixer",
     "watch:css": "npm-watch build:css ",
-    "build:jsx": "babel index.jsx -d build --source-maps inline",
+    "build:jsx": "babel src/index.jsx -d build --source-maps inline",
     "watch:jsx": "babel **/*.jsx -d build --watch --source-maps inline --verbose",
     "watch:js": "npm-watch generate:debug",
     "generate": "node -r esm build/index.js",

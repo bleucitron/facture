@@ -29,7 +29,7 @@ program
 
 const init = program.debug
   ? Promise.resolve({ client: clients['HUM'], ok: true })
-  : prompt(clients);
+  : prompt(clients, items);
 
 init.then(({ client, ok }) => {
   if (!ok) return;

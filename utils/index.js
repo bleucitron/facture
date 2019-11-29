@@ -1,3 +1,4 @@
+import inquirer from 'inquirer';
 import { formatDefaultLocale } from 'd3-format';
 import locale from 'd3-format/locale/fr-FR';
 
@@ -29,7 +30,7 @@ function displayItems(items) {
 
 const format = formatDefaultLocale(locale).format;
 
-export function prompt(clients) {
+export function prompt(clients, items) {
   return inquirer.prompt([
     {
       type: 'list',
