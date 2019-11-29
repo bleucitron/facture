@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build:css": "node-sass style.scss build/style.css | postcss build/style.css -u autoprefixer -r",
+    "build:css": "node-sass style.scss build/style.css",
+    "postbuild:css": "postcss build/style.css -r -u autoprefixer",
     "watch:css": "npm-watch build:css ",
     "build:jsx": "babel index.jsx -d build --source-maps inline",
     "watch:jsx": "babel **/*.jsx -d build --watch --source-maps inline --verbose",
@@ -48,12 +49,12 @@
     "@babel/core": "^7.3.3",
     "@babel/preset-env": "^7.3.1",
     "@babel/preset-react": "^7.0.0",
-    "autoprefixer": "^9.4.8",
+    "autoprefixer": "^9.7.2",
     "browser-sync": "^2.26.7",
     "node-sass": "^4.11.0",
     "npm-run-all": "^4.1.5",
     "npm-watch": "^0.6.0",
     "pngjs": "^3.3.3",
-    "postcss-cli": "^6.1.2"
+    "postcss-cli": "^6.1.3"
   }
 }

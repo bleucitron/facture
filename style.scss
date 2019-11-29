@@ -2,7 +2,6 @@ $dark-grey: #333;
 $light-grey: #bbb;
 $very-light-grey: #eee;
 
-
 * {
   box-sizing: border-box;
 }
@@ -24,7 +23,7 @@ body {
 
 h2 {
   margin: 0;
-  font-size: .9rem;
+  font-size: 0.9rem;
   background-color: $dark-grey;
   color: white;
 }
@@ -68,21 +67,23 @@ header {
   font-weight: bold;
 
   span {
-    margin-right: .5rem;
+    margin-right: 0.5rem;
     color: $light-grey;
     font-weight: normal;
   }
 }
 
 .items {
-  margin: .5rem 0;
+  margin: 0.5rem 0;
 
-  .item, .headers {
+  .item,
+  .headers {
     display: flex;
 
-    > div, > span {
+    > div,
+    > span {
       display: block;
-      padding: .3rem .5rem;
+      padding: 0.3rem 0.5rem;
       border-right: 1px solid white;
       box-sizing: border-box;
       text-align: right;
@@ -108,13 +109,14 @@ header {
 
   .item {
     .description {
-      p, ul {
+      p,
+      ul {
         margin: 0;
       }
     }
 
     &:nth-child(even) {
-      background-color: rgba($very-light-grey, .5);
+      background-color: rgba($very-light-grey, 0.5);
     }
 
     &:nth-child(odd) {
@@ -129,10 +131,11 @@ header {
     > div {
       display: flex;
       justify-content: flex-end;
-      margin: .5rem;
+      margin: 0.5rem;
       text-align: right;
 
-      .price, .vat {
+      .price,
+      .vat {
         width: 13rem;
         margin-left: 1rem;
       }
@@ -148,7 +151,6 @@ header {
       font-size: 1.5rem;
       font-weight: 700;
     }
-
   }
 }
 
@@ -156,20 +158,20 @@ header {
   background-color: $very-light-grey;
 
   h2 {
-    padding: .3rem .5rem;
+    padding: 0.3rem 0.5rem;
     background-color: $dark-grey;
   }
 
   > div {
-    padding: .3rem .5rem;
+    padding: 0.3rem 0.5rem;
   }
 
   .bankDetails {
-    margin: .9rem 0;
+    margin: 0.9rem 0;
     text-align: center;
 
     span {
-      margin-right: .5rem;
+      margin-right: 0.5rem;
       color: $light-grey;
     }
   }
@@ -180,20 +182,20 @@ header {
 }
 
 .provider {
-  padding: .3rem .5rem;
+  padding: 0.3rem 0.5rem;
   text-align: center;
   background-color: $dark-grey;
   color: $very-light-grey;
 
   span {
-    margin-right: .5rem;
+    margin-right: 0.5rem;
   }
 }
 
 footer {
   display: flex;
   justify-content: space-between;
-  margin-top: .5rem;
+  margin-top: 0.5rem;
   color: $dark-grey;
 
   > div {
