@@ -1,14 +1,7 @@
 import React from 'react';
 import Markdown from 'markdown-to-jsx';
 
-import { format, formatDefaultLocale } from 'd3-format';
-import locale from 'd3-format/locale/fr-FR';
-
-formatDefaultLocale(locale);
-
-function formatPrice(price) {
-  return format("($,.2f")(price);
-}
+import { formatPrice } from './utils';
 
 const Items = ({ items }) => {
   const Headers = () => (
@@ -22,16 +15,17 @@ const Items = ({ items }) => {
 
   const myItems = items.map(({ description, unitPrice, quantity }, i) => (
     <div className='item' key={i}>
-      <Markdown className='description'>
-        {description}
-      </Markdown>
+      <Markdown className='description'>{description}</Markdown>
       <div className='price'>{formatPrice(unitPrice)}</div>
       <div className='quantity'>{quantity}</div>
       <div className='price'>{formatPrice(unitPrice * quantity)}</div>
     </div>
   ));
 
-  const totalHT = items.reduce((acc, { unitPrice, quantity }) => acc + unitPrice * quantity, 0);
+  const totalHT = items.reduce(
+    (acc, { unitPrice, quantity }) => acc + unitPrice * quantity,
+    0,
+  );
   const vat = 0;
   const totalTTC = totalHT * (1 + vat);
 
