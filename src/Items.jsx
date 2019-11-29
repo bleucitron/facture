@@ -1,7 +1,7 @@
 import React from 'react';
 import Markdown from 'markdown-to-jsx';
 
-import { formatPrice } from './utils';
+import { formatPrice } from '../utils';
 
 const Items = ({ items }) => {
   const Headers = () => (

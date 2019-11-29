@@ -5,7 +5,7 @@ export function getFullName({ firstName, familyName }) {
   return `${firstName} ${familyName}`;
 }
 
-export function displayItems(items) {
+function displayItems(items) {
   items.forEach((item, i) => {
     const { description, quantity, unitPrice } = item;
 
@@ -28,6 +28,31 @@ export function displayItems(items) {
 }
 
 const format = formatDefaultLocale(locale).format;
+
+export function prompt(clients) {
+  return inquirer.prompt([
+    {
+      type: 'list',
+      name: 'client',
+      message: 'What is the client?',
+      choices: Object.values(clients).map(client => ({
+        name: client.name,
+        value: client.code,
+      })),
+      filter: code => clients[code],
+    },
+    {
+      type: 'confirm',
+      name: 'ok',
+      message: () => {
+        displayItems(items);
+        return 'Is this ok?';
+      },
+      default: true,
+      filter: code => clients[code],
+    },
+  ]);
+}
 
 export function formatPrice(price) {
   return format('($,.2f')(price);

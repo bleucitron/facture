@@ -5,12 +5,12 @@ import { JSDOM } from 'jsdom';
 import React from 'react';
 import ReactDOMServer from 'react-dom/server';
 import { DateTime } from 'luxon';
+import 'colors';
 import pdf from 'html-pdf';
-import inquirer from 'inquirer';
-import colors from 'colors';
+
 import rc from 'rc';
 
-import { displayItems } from '../utils';
+import { prompt } from '../utils';
 import Invoice from './Invoice';
 
 function fromYaml(file) {
@@ -27,35 +27,21 @@ program
   .option('-d, --debug', 'Debug mode')
   .parse(process.argv);
 
-inquirer
-.prompt([{
-  type: 'list',
-  name: 'client',
-  message: 'What is the client?',
-  choices: Object.values(clients).map(client => ({
-    name: client.name,
-    value: client.code
-  })),
-  filter: code => clients[code]
-}, {
-  type: 'confirm',
-  name: 'ok',
-  message: () => {
-    displayItems(items);
-    return 'Is this ok?';
-  },
-  default: true,
-  filter: code => clients[code]
-}])
-.then(({ client, ok }) => {
+const init = program.debug
+  ? Promise.resolve({ client: clients['HUM'], ok: true })
+  : prompt(clients);
+
+init.then(({ client, ok }) => {
   if (!ok) return;
 
-  const dateArray = DateTime.local().toISO().split('T')[0].split('-');
+  const dateArray = DateTime.local()
+    .toISO()
+    .split('T')[0]
+    .split('-');
 
   const id = invoices.length + 1;
   const number = invoices.reduce((acc, invoice) => {
-    if (invoice.clientCode === client.code)
-      return acc + 1;
+    if (invoice.clientCode === client.code) return acc + 1;
     return acc;
   }, 1);
 
@@ -71,7 +57,10 @@ inquirer
     label,
     date: dateArray.reverse().join('/'),
     clientCode: client.code,
-    priceHT: items.reduce((acc, { unitPrice, quantity }) => acc + unitPrice * quantity, 0)
+    priceHT: items.reduce(
+      (acc, { unitPrice, quantity }) => acc + unitPrice * quantity,
+      0,
+    ),
   };
 
   invoices.push(invoice);
@@ -80,7 +69,12 @@ inquirer
   const document = dom.window.document;
 
   document.body.innerHTML = ReactDOMServer.renderToStaticMarkup(
-    <Invoice provider={provider} items={items} client={client} invoice={invoice} />
+    <Invoice
+      provider={provider}
+      items={items}
+      client={client}
+      invoice={invoice}
+    />,
   );
 
   var options = {
@@ -95,13 +89,14 @@ inquirer
 
   writeFileSync('./build/index.html', dom.serialize());
 
-  if (!program.debug)
-    writeFileSync('./data/invoices.yaml', safeDump(invoices));
+  if (!program.debug) writeFileSync('./data/invoices.yaml', safeDump(invoices));
 
   const dir = program.debug ? '.' : rc('facture').outputDir;
 
-  pdf.create(dom.serialize(), options).toFile(`${dir}/${label}.pdf`, function (err, res) {
-    if (err) return console.log(err);
-    console.log(res.filename.green);
-  });
+  pdf
+    .create(dom.serialize(), options)
+    .toFile(`${dir}/${label}.pdf`, function(err, res) {
+      if (err) return console.log(err);
+      console.log(res.filename.green);
+    });
 });
