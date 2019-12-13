@@ -4,6 +4,7 @@ $very-light-grey: #eee;
 
 * {
   box-sizing: border-box;
+  // margin: 0;
 }
 
 html {
@@ -81,8 +82,10 @@ header {
     display: flex;
 
     > div,
+    > p,
     > span {
       display: block;
+      margin: 0;
       padding: 0.3rem 0.5rem;
       border-right: 1px solid white;
       box-sizing: border-box;
