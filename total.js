@@ -1,5 +1,6 @@
 import { readFileSync } from 'fs';
 import { safeLoad } from 'js-yaml';
+import { DateTime } from 'luxon';
 import chalk from 'chalk';
 
 import { formatPrice } from './utils';
@@ -16,48 +17,98 @@ function logAmount(text, value) {
   console.log(`${text}: ${amount} / ${cotisation} / ${impots}`);
 }
 
-// function logAmounts(amount) {
-//   console.log();
-//   console.log('--- TOTAL ---');
-//   console.log(`CA: ${amount}€`);
-//   console.log(`Cotisations 5,5%: ${evaluate(amount, 5.5)}€`);
-//   console.log(`Impôt sur le revenu: ${evaluate(amount, 2.2)}€`);
-//   console.log('---');
-//   console.log(`Cotisations 11%: ${evaluate(amount, 11)}€`);
-//   console.log(`Cotisations 16,5%: ${evaluate(amount, 16.5)}€`);
-//   console.log(`Cotisations 22%: ${evaluate(amount, 22)}€`);
-// }
+function logQuarter(quarter, year, value) {
+  const amount = chalk.green(`${formatPrice(value)}`);
 
-const all = safeLoad(readFileSync('./data/invoices.yaml'), 'utf8');
+  console.log(`${year} Q${quarter}: ${amount}`);
+  console.log();
+}
 
-const total = all.reduce((total, invoice) => total + invoice.priceHT, 0);
+function logYear(year, value) {
+  const amount = chalk.green(`${formatPrice(value)}`);
 
-const byMonth = all.reduce((monthToAmount, invoice) => {
-  const [d, m, y] = invoice.date.split('/');
+  console.log(`${year}: ${amount}`);
+  console.log();
+}
 
-  const key = `${m}/${y}`;
+function parseDate(date) {
+  return DateTime.fromFormat(date, 'dd/MM/yyyy');
+}
 
-  const amount = monthToAmount[key] || 0;
-  monthToAmount[key] = amount + invoice.priceHT;
+function makeDateKeys(all) {
+  const first = parseDate(all[0].date);
+  const last = parseDate(all[all.length - 1].date);
 
-  return monthToAmount;
-}, {});
+  let current = first;
+  let currentKey = first.toFormat('yyyy/MM');
+  const lastKey = last.toFormat('yyyy/MM');
 
-const byYear = all.reduce((yearToAmount, invoice) => {
-  const [d, m, y] = invoice.date.split('/');
+  const keys = [];
 
-  const amount = yearToAmount[y] || 0;
-  yearToAmount[y] = amount + invoice.priceHT;
+  while (currentKey <= lastKey) {
+    keys.push(current.toFormat('MM/yyyy'));
+    current = current.plus({ months: 1 });
+    currentKey = current.toFormat('yyyy/MM');
+  }
 
-  return yearToAmount;
-}, {});
+  return keys;
+}
 
-Object.entries(byMonth).map(([date, value]) => {
-  logAmount(date, value);
+const invoices = safeLoad(readFileSync('./data/invoices.yaml'), 'utf8');
+const keys = makeDateKeys(invoices);
+
+invoices.sort((i1, i2) => {
+  return -1 * (parseDate(i2.date) - parseDate(i1.date));
 });
 
-console.log();
-logAmount('2019', byYear['2019']);
+const total = invoices.reduce((total, invoice) => total + invoice.priceHT, 0);
 
-console.log();
+const entries = keys.map(key => {
+  const is = invoices.filter(
+    i => parseDate(i.date).toFormat('MM/yyyy') === key,
+  );
+
+  const amount = is.reduce((acc, cur) => acc + cur.priceHT, 0);
+
+  return [key, amount];
+});
+
+// console.log('All by month', Object.fromEntries(entries));
+
+let curQuarter;
+let curYear;
+let accQuarter = 0;
+let accYear = 0;
+
+entries.map(([date, value]) => {
+  accQuarter += value;
+  accYear += value;
+
+  const [m, y] = date.split('/');
+  const month = parseInt(m);
+  const year = parseInt(y);
+  curQuarter = Math.floor((month - 1) / 3) + 1;
+  curYear = year;
+
+  logAmount(date, value);
+
+  if (month % 3 === 0) {
+    logQuarter(curQuarter, year, accQuarter);
+    accQuarter = 0;
+  }
+
+  if (month === 12) {
+    logYear(curYear, accYear);
+    accYear = 0;
+  }
+});
+
+if (accQuarter !== 0) {
+  logQuarter(curQuarter, curYear, accQuarter);
+}
+
+if (accYear !== 0) {
+  logYear(curYear, accYear);
+}
+
 logAmount('Total', total);
