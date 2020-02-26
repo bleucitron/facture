@@ -7,17 +7,17 @@ import Items from './Items';
 import Payment from './Payment';
 import Footer from './Footer';
 
-const Invoice = ({ provider, client, items, invoice }) => (
+const Doc = ({ provider, client, items, doc, vat, isInvoice }) => (
   <>
     <Header {...provider} />
     <main className='main'>
       <Client {...client} />
-      <Infos {...invoice} />
-      <Items items={items} />
-      <Payment {...provider.bankDetails} />
+      <Infos {...doc} isInvoice={isInvoice} />
+      <Items items={items} vat={vat} isInvoice={isInvoice} />
+      {isInvoice && <Payment {...provider.bankDetails} />}
     </main>
-    <Footer provider={provider} invoice={invoice} />
+    <Footer provider={provider} doc={doc} isInvoice={isInvoice} />
   </>
 );
 
-export default Invoice;
+export default Doc;

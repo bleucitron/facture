@@ -1,4 +1,5 @@
 $dark-grey: #333;
+$credit: #008a7d;
 $light-grey: #bbb;
 $very-light-grey: #eee;
 
@@ -27,6 +28,10 @@ h2 {
   font-size: 0.9rem;
   background-color: $dark-grey;
   color: white;
+
+  &.credit {
+    background-color: $credit;
+  }
 }
 
 section {
@@ -40,6 +45,7 @@ main {
 .image {
   display: flex;
   flex-direction: row-reverse;
+  margin-bottom: 2px;
 
   img {
     width: 80px;
@@ -163,6 +169,10 @@ header {
   h2 {
     padding: 0.3rem 0.5rem;
     background-color: $dark-grey;
+
+    &.credit {
+      background-color: $credit;
+    }
   }
 
   > div {
@@ -189,6 +199,10 @@ header {
   text-align: center;
   background-color: $dark-grey;
   color: $very-light-grey;
+
+  &.credit {
+    background-color: $credit;
+  }
 
   span {
     margin-right: 0.5rem;

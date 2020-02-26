@@ -8,7 +8,14 @@ export function getFullName({ firstName, familyName }) {
   return `${firstName} ${familyName}`;
 }
 
-function displayItems(items) {
+export const docType = {
+  invoice: 'invoice',
+  credit: 'credit',
+};
+
+function displayItems(answers, items) {
+  const { type, client, vat } = answers;
+
   items.forEach((item, i) => {
     const { description, quantity, unitPrice } = item;
 
@@ -24,16 +31,31 @@ function displayItems(items) {
     (acc, { unitPrice, quantity }) => acc + unitPrice * quantity,
     0,
   );
+
   const qty = items.length.toString().bold;
-  const price = `${total.toString()}€`.bold;
+  const price = `${round(total).toString()}€`.bold;
   console.log();
-  console.log(`This invoice has ${qty} items, for a total of ${price}.`);
+  console.log(`This ${type} has ${qty} items, for a total of ${price}.`);
+  console.log(`The VAT is ${vat * 100}%.`);
+  console.log();
+  console.log(`The client is ${client.name}.`);
+  console.log();
 }
 
 const format = formatDefaultLocale(locale).format;
 
 export function prompt(clients, items) {
   return inquirer.prompt([
+    {
+      type: 'list',
+      name: 'type',
+      message: 'Invoice or Credit ?',
+      choices: Object.values(docType).map(type => ({
+        name: type,
+        value: type,
+      })),
+      default: 0,
+    },
     {
       type: 'list',
       name: 'client',
@@ -45,20 +67,35 @@ export function prompt(clients, items) {
       filter: code => clients[code],
     },
     {
+      type: 'list',
+      name: 'vat',
+      message: 'TVA ?',
+      choices: [0, 20].map(value => ({
+        name: value,
+        value: value,
+      })),
+      default: 0,
+      filter: vat => vat / 100,
+    },
+    {
       type: 'confirm',
       name: 'ok',
-      message: () => {
-        displayItems(items);
+      message: answers => {
+        displayItems(answers, items);
         return 'Is this ok?';
       },
       default: true,
-      filter: code => clients[code],
     },
   ]);
 }
 
-function formatPrice(price) {
+export function formatPrice(price) {
   return format('($,.2f')(price);
+}
+
+export function round(value, exp = 2) {
+  const factor = 10 ** exp;
+  return Math.round(value * factor) / factor;
 }
 
 function evaluate(amount, rate) {

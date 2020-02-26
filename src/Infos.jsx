@@ -1,7 +1,8 @@
 import React from 'react';
-import { DateTime } from 'luxon';
 
-const Infos = ({ id, label, date }) => {
+const Infos = ({ id, label, date, isInvoice }) => {
+  const type = isInvoice ? 'Facture' : 'Avoir';
+
   return (
     <section className='info'>
       <div className='date'>
@@ -9,7 +10,7 @@ const Infos = ({ id, label, date }) => {
         {date}
       </div>
       <div className='id'>
-        <span>Facture nº</span>
+        <span>{type} nº</span>
         {id}
       </div>
       <div className='label'>
@@ -17,7 +18,7 @@ const Infos = ({ id, label, date }) => {
         {label}
       </div>
     </section>
-  )
+  );
 };
 
 export default Infos;

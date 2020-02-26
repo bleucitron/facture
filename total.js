@@ -7,23 +7,36 @@ import {
   logQuarter,
   logYear,
   makeDateKeys,
+  docType,
 } from './utils';
 
-const invoices = safeLoad(readFileSync('./data/invoices.yaml'), 'utf8');
-const keys = makeDateKeys(invoices);
+const invoices = safeLoad(readFileSync('./data/invoices.yaml'), 'utf8') || [];
+const credits = safeLoad(readFileSync('./data/credits.yaml'), 'utf8') || [];
 
-invoices.sort((i1, i2) => {
-  return -1 * (parseDate(i2.date) - parseDate(i1.date));
+const documents = [...invoices, ...credits];
+
+const keys = makeDateKeys(documents);
+
+documents.sort((d1, d2) => {
+  return -1 * (parseDate(d2.date) - parseDate(d1.date));
 });
 
-const total = invoices.reduce((total, invoice) => total + invoice.priceHT, 0);
+const total = documents.reduce((total, doc) => {
+  const { type = docType.invoice } = doc;
+  const factor = type === docType.invoice ? 1 : -1;
+  return total + doc.priceHT * factor;
+}, 0);
 
 const entries = keys.map(key => {
-  const is = invoices.filter(
+  const is = documents.filter(
     i => parseDate(i.date).toFormat('MM/yyyy') === key,
   );
 
-  const amount = is.reduce((acc, cur) => acc + cur.priceHT, 0);
+  const amount = is.reduce((acc, cur) => {
+    const { type = docType.invoice } = cur;
+    const factor = type === docType.invoice ? 1 : -1;
+    return acc + cur.priceHT * factor;
+  }, 0);
 
   return [key, amount];
 });

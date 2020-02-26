@@ -8,19 +8,21 @@
     "build:css": "node-sass style.scss build/style.css",
     "postbuild:css": "postcss build/style.css -r -u autoprefixer",
     "watch:css": "npm-watch build:css",
-    "build:jsx": "babel src/index.jsx -d build --source-maps inline",
-    "watch:jsx": "babel **/*.jsx -d build --watch --source-maps inline --verbose",
-    "watch:js": "npm-watch generate:debug",
-    "pregenerate": "npm run build",
+    "build:jsx": "babel src/*.jsx -d build --source-maps inline",
+    "watch:jsx": "babel src/*.jsx -d build --watch --source-maps inline --verbose",
+    "watch:js": "npm-watch generate:watch",
+    "pregenerate": "npm run build --silent",
     "generate": "node -r esm build/index.js",
     "pregenerate:debug": "npm run build",
     "generate:debug": "node -r esm build/index.js -d",
+    "generate:watch": "node -r esm build/index.js -d",
     "sync": "browser-sync start -s 'build' -f 'build' -b 'google chrome'",
+    "prestart": "npm run build",
     "start": "npm-run-all --parallel watch:* sync",
     "total": "node -r esm total.js"
   },
   "watch": {
-    "generate:debug": {
+    "generate:watch": {
       "patterns": [
         "build"
       ],
@@ -33,6 +35,7 @@
   "license": "ISC",
   "dependencies": {
     "chalk": "^3.0.0",
+    "classnames": "^2.2.6",
     "colors": "^1.3.3",
     "commander": "^2.19.0",
     "d3-format": "^1.4.2",

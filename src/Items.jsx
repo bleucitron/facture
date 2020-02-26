@@ -1,11 +1,12 @@
 import React from 'react';
+import classnames from 'classnames';
 import Markdown from 'markdown-to-jsx';
 
-import { formatPrice } from '../utils';
+import { formatPrice, round } from '../utils';
 
-const Items = ({ items }) => {
+const Items = ({ items, isInvoice, vat }) => {
   const Headers = () => (
-    <h2 className='headers'>
+    <h2 className={classnames('headers', { credit: !isInvoice })}>
       <div className='description'>Description</div>
       <div className='price'>Prix unitaire</div>
       <div className='quantity'>Quantité</div>
@@ -22,12 +23,14 @@ const Items = ({ items }) => {
     </div>
   ));
 
-  const totalHT = items.reduce(
-    (acc, { unitPrice, quantity }) => acc + unitPrice * quantity,
-    0,
+  const totalHT = round(
+    items.reduce(
+      (acc, { unitPrice, quantity }) => acc + unitPrice * quantity,
+      0,
+    ),
   );
-  const vat = 0;
-  const totalTTC = totalHT * (1 + vat);
+  const totalVAT = round(totalHT * vat);
+  const totalTTC = round(totalHT * (1 + vat));
 
   const Totals = () => (
     <div className='totals'>
@@ -36,8 +39,8 @@ const Items = ({ items }) => {
         <div className='price'>{formatPrice(totalHT)}</div>
       </div>
       <div className={`taxes ${!vat && 'zero'}`}>
-        <div>TVA</div>
-        <div className='vat'>{vat || 'Exonérée'}</div>
+        <div>TVA {vat ? `${vat * 100}%` : ''}</div>
+        <div className='vat'>{vat ? formatPrice(totalVAT) : 'Exonérée'}</div>
       </div>
       <div className='ttc'>
         <div>Total TTC</div>
