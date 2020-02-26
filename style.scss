@@ -200,6 +200,11 @@ header {
   background-color: $dark-grey;
   color: $very-light-grey;
 
+  .name,
+  .formation {
+    margin-bottom: 1rem;
+  }
+
   &.credit {
     background-color: $credit;
   }

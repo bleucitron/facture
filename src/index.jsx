@@ -29,7 +29,7 @@ program
   .parse(process.argv);
 
 const defaultOptions = {
-  type: docType.credit,
+  type: docType.invoice,
   client: clients['HUM'],
   vat: 20 / 100,
   ok: true,

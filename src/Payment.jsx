@@ -1,11 +1,8 @@
 import React from 'react';
-import classnames from 'classnames';
 
-const Payment = ({ bank, iban, bic, isInvoice }) => (
+const Payment = ({ bank, iban, bic }) => (
   <section className='payment'>
-    <h2 className={classnames({ credit: !isInvoice })}>
-      Conditions de paiement
-    </h2>
+    <h2>Conditions de paiement</h2>
     <div className='conditions'>
       À réception de la présente facture, par virement aux coordonnées bancaires
       suivantes:
