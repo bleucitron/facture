@@ -74,7 +74,7 @@ export function prompt(clients, items) {
         name: value,
         value: value,
       })),
-      default: 0,
+      default: 1,
       filter: vat => vat / 100,
     },
     {
