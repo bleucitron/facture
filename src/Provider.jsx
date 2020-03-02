@@ -15,13 +15,26 @@ const Provider = ({
   da,
   da_place,
   isInvoice,
-  ...names,
+  ...names
 }) => (
   <div className={classnames('provider', { credit: !isInvoice })}>
-    <div className='name'>{`${getFullName(names)} \n { ${description} }`}</div>
-    <div className='siret'>{`SIRET ${siret}`}</div>
-    <div className='tva'>{`n° de TVA intracommunautaire ${tva}`}</div>
-    <div className='formation'>{`DA de formation ${da} (${da_place})`}</div>
+    <div className='name'>
+      <div>{getFullName(names)}</div>
+      <div className='label'>{`{ ${description} }`}</div>
+    </div>
+    <div className='siret'>
+      <span className='label'>SIRET</span>
+      <span>{siret}</span>
+    </div>
+    <div className='tva'>
+      <span className='label'>TVA</span>
+      <span>{tva}</span>
+    </div>
+    <div className='formation'>
+      <span className='label'>DA de formation</span>
+      <span>{da}</span>
+      <span className='label'>{`(${da_place})`}</span>
+    </div>
     <div className='email'>{email}</div>
     <div className='phone'>{phone}</div>
     <div className='address'>{`${address} ${zip} ${city}`}</div>

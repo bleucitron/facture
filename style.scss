@@ -1,5 +1,6 @@
 $dark-grey: #333;
 $credit: #008a7d;
+$grey: #666;
 $light-grey: #bbb;
 $very-light-grey: #eee;
 
@@ -203,6 +204,7 @@ header {
   .name,
   .formation {
     margin-bottom: 1rem;
+    white-space: pre;
   }
 
   &.credit {
@@ -211,6 +213,10 @@ header {
 
   span {
     margin-right: 0.5rem;
+  }
+
+  .label {
+    color: $grey;
   }
 }
 
