@@ -102,11 +102,11 @@ function evaluate(amount, rate) {
   return Math.round((amount * rate) / 100);
 }
 
-function calculateRates(value, _chalk = chalk) {
+function calculateRates(value, vat, _chalk = chalk) {
   // const cotisation = chalk.grey(`5,5%: ${evaluate(value, 5.5)}€`);
   const cotisation = _chalk.grey(`16,5%: ${evaluate(value, 16.5)}€`);
   const impots = _chalk.grey(`2,2%: ${evaluate(value, 2.2)}€`);
-  const tva = _chalk.yellow(`20%: ${evaluate(value, 20)}€`);
+  const tva = _chalk.yellow(`TVA: ${evaluate(vat, 100)}€`);
 
   return {
     cotisation,
@@ -119,15 +119,15 @@ export function parseDate(date) {
   return DateTime.fromFormat(date, 'dd/MM/yyyy');
 }
 
-export function logAmount(text, value) {
-  const { cotisation, impots, tva } = calculateRates(value);
+export function logAmount(text, value, vat) {
+  const { cotisation, impots, tva } = calculateRates(value, vat);
   const amount = chalk.blue(`${formatPrice(value)}`);
 
   console.log(`${text}: ${amount} / ${cotisation} / ${impots} / ${tva}`);
 }
 
-export function logQuarter(quarter, year, value) {
-  const { cotisation, impots, tva } = calculateRates(value, chalk.bold);
+export function logQuarter(quarter, year, value, vat) {
+  const { cotisation, impots, tva } = calculateRates(value, vat, chalk.bold);
   const amount = chalk.bold.green(`${formatPrice(value)}`);
 
   console.log(
@@ -136,9 +136,10 @@ export function logQuarter(quarter, year, value) {
   console.log();
 }
 
-export function logYear(year, value) {
+export function logYear(year, value, vat) {
   const { cotisation, impots, tva } = calculateRates(
     value,
+    vat,
     chalk.bold.underline,
   );
   const amount = chalk.bold.underline.green(`${formatPrice(value)}`);
