@@ -7,16 +7,20 @@ import Items from './Items';
 import Payment from './Payment';
 import Footer from './Footer';
 
-const Doc = ({ provider, client, items, doc, vat, isInvoice }) => (
+import { docType } from '../utils';
+
+const Doc = ({ provider, client, items, doc, vat, type }) => (
   <>
     <Header {...provider} />
     <main className='main'>
       <Client {...client} />
-      <Infos {...doc} isInvoice={isInvoice} />
-      <Items items={items} vat={vat} isInvoice={isInvoice} />
-      {isInvoice && <Payment {...provider.bankDetails} />}
+      <Infos {...doc} type={type} />
+      <Items items={items} vat={vat} type={type} />
+      {type !== docType.credit ? (
+        <Payment {...provider.bankDetails} type={type} />
+      ) : null}
     </main>
-    <Footer provider={provider} doc={doc} isInvoice={isInvoice} />
+    <Footer provider={provider} doc={doc} type={type} />
   </>
 );
 

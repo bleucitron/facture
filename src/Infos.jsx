@@ -1,7 +1,16 @@
 import React from 'react';
 
-const Infos = ({ id, label, date, isInvoice }) => {
-  const type = isInvoice ? 'Facture' : 'Avoir';
+import { docType, docTypeText } from '../utils';
+
+const Infos = ({ id, label, date, type }) => {
+  const typeText = docTypeText[type];
+
+  const duration =
+    type === docType.quote ? (
+      <div className='duration'>
+        <span>Validité</span>30 jours
+      </div>
+    ) : null;
 
   return (
     <section className='info'>
@@ -10,13 +19,14 @@ const Infos = ({ id, label, date, isInvoice }) => {
         {date}
       </div>
       <div className='id'>
-        <span>{type} nº</span>
+        <span>{typeText} nº</span>
         {id}
       </div>
       <div className='label'>
         <span>Label</span>
         {label}
       </div>
+      {duration}
     </section>
   );
 };

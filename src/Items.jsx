@@ -4,9 +4,9 @@ import Markdown from 'markdown-to-jsx';
 
 import { formatPrice, round } from '../utils';
 
-const Items = ({ items, isInvoice, vat }) => {
+const Items = ({ items, type, vat }) => {
   const Headers = () => (
-    <h2 className={classnames('headers', { credit: !isInvoice })}>
+    <h2 className={classnames('headers', type)}>
       <div className='description'>Description</div>
       <div className='price'>Prix unitaire</div>
       <div className='quantity'>Quantité</div>

@@ -1,5 +1,6 @@
 $dark-grey: #333;
 $credit: #008a7d;
+$quote: #855a86;
 $grey: #666;
 $light-grey: #bbb;
 $very-light-grey: #eee;
@@ -32,6 +33,10 @@ h2 {
 
   &.credit {
     background-color: $credit;
+  }
+
+  &.quote {
+    background-color: $quote;
   }
 }
 
@@ -168,11 +173,14 @@ header {
 
   h2 {
     padding: 0.3rem 0.5rem;
-    background-color: $dark-grey;
+    // background-color: $dark-grey;
 
-    &.credit {
-      background-color: $credit;
-    }
+    // &.credit {
+    //   background-color: $credit;
+    // }
+    // &.quote {
+    //   background-color: $quote;
+    // }
   }
 
   > div {
@@ -206,12 +214,19 @@ header {
     white-space: pre;
   }
 
-  &.credit {
-    background-color: $credit;
-
+  &.credit,
+  &.quote {
     .label {
       color: rgba(white, 0.3);
     }
+  }
+
+  &.credit {
+    background-color: $credit;
+  }
+
+  &.quote {
+    background-color: $quote;
   }
 
   span {

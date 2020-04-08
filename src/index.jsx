@@ -22,6 +22,7 @@ const clients = fromYaml('./data/clients.yaml');
 const items = fromYaml('./data/items.yaml');
 const invoices = fromYaml('./data/invoices.yaml') || [];
 const credits = fromYaml('./data/credits.yaml') || [];
+const quotes = fromYaml('./data/quotes.yaml') || [];
 
 program
   .version('0.1.0')
@@ -29,7 +30,7 @@ program
   .parse(process.argv);
 
 const defaultOptions = {
-  type: docType.invoice,
+  type: docType.quote,
   client: clients['HUM'],
   vat: 20 / 100,
   ok: true,
@@ -42,14 +43,21 @@ const init = program.debug
 init.then(({ type, client, vat, ok }) => {
   if (!ok) return;
 
-  const isInvoice = type === docType.invoice;
+  let docs = invoices;
+  let key = 'F';
+  let typePath = 'invoices';
 
-  const docs = isInvoice ? invoices : credits;
+  if (type === docType.credit) {
+    docs = credits;
+    key = 'A';
+    typePath = 'credits';
+  } else if (type === docType.quote) {
+    docs = quotes;
+    key = 'D';
+    typePath = 'quotes';
+  }
 
-  const dateArray = DateTime.local()
-    .toISO()
-    .split('T')[0]
-    .split('-');
+  const dateArray = DateTime.local().toISO().split('T')[0].split('-');
 
   const id = docs.length + 1;
   const number = docs.reduce((acc, doc) => {
@@ -57,14 +65,12 @@ init.then(({ type, client, vat, ok }) => {
     return acc;
   }, 1);
 
-  const key = isInvoice ? 'F' : 'A';
-
   const label = [...dateArray.slice(0, 2), client.code, `${key}${number}`].join(
     '_',
   );
 
   console.log();
-  console.log(`Generating invoice #${id}, ${label.bold}...`);
+  console.log(`Generating ${type} #${id}, ${label.bold}...`);
 
   const html = readFileSync('./base.html');
 
@@ -96,7 +102,7 @@ init.then(({ type, client, vat, ok }) => {
       items={items}
       client={client}
       doc={doc}
-      isInvoice={isInvoice}
+      type={type}
       vat={vat}
     />,
   );
@@ -113,14 +119,14 @@ init.then(({ type, client, vat, ok }) => {
 
   writeFileSync('./build/index.html', dom.serialize());
 
-  const outputPath = `./data/${isInvoice ? 'invoices' : 'credits'}.yaml`;
+  const outputPath = `./data/${typePath}.yaml`;
   if (!program.debug) writeFileSync(outputPath, safeDump(docs));
 
   const dir = program.debug ? '.' : rc('facture').outputDir;
 
   pdf
     .create(dom.serialize(), options)
-    .toFile(`${dir}/${label}.pdf`, function(err, res) {
+    .toFile(`${dir}/${label}.pdf`, function (err, res) {
       if (err) return console.log(err);
       console.log(res.filename.green);
     });

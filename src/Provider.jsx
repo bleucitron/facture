@@ -14,10 +14,10 @@ const Provider = ({
   tva,
   da,
   da_place,
-  isInvoice,
+  type,
   ...names
 }) => (
-  <div className={classnames('provider', { credit: !isInvoice })}>
+  <div className={classnames('provider', type)}>
     <div className='name'>
       <div>{getFullName(names)}</div>
       <div className='label'>{`{ ${description} }`}</div>
