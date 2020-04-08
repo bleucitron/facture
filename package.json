@@ -20,7 +20,8 @@
     "sync": "browser-sync start -s 'build' -f 'build' -b 'google chrome'",
     "prestart": "npm run build",
     "start": "npm-run-all --parallel watch:* sync",
-    "total": "node -r esm total.js"
+    "total": "node -r esm scripts/total.js",
+    "book": "node -r esm scripts/book.js"
   },
   "watch": {
     "generate:watch": {
@@ -39,6 +40,7 @@
     "classnames": "^2.2.6",
     "colors": "^1.3.3",
     "commander": "^2.19.0",
+    "csv-stringify": "^5.3.6",
     "d3-format": "^1.4.2",
     "esm": "^3.2.6",
     "html-pdf": "^2.2.0",

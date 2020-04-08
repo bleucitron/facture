@@ -1,3 +1,4 @@
+import { join } from 'path';
 import { readFileSync } from 'fs';
 import { safeLoad } from 'js-yaml';
 
@@ -8,10 +9,14 @@ import {
   logYear,
   makeDateKeys,
   docType,
-} from './utils';
+} from '../utils';
 
-const invoices = safeLoad(readFileSync('./data/invoices.yaml'), 'utf8') || [];
-const credits = safeLoad(readFileSync('./data/credits.yaml'), 'utf8') || [];
+const dataDir = join(__dirname, '../data');
+
+const invoices =
+  safeLoad(readFileSync(join(dataDir, 'invoices.yaml')), 'utf8') || [];
+const credits =
+  safeLoad(readFileSync(join(dataDir, 'invoices.yaml')), 'utf8') || [];
 
 const documents = [...invoices, ...credits];
 
@@ -38,9 +43,9 @@ function reducer(acc, cur) {
 
 const total = documents.reduce(reducer, { value: 0, vat: 0 });
 
-const entries = keys.map(key => {
+const entries = keys.map((key) => {
   const is = documents.filter(
-    i => parseDate(i.date).toFormat('MM/yyyy') === key,
+    (i) => parseDate(i.date).toFormat('MM/yyyy') === key,
   );
 
   const amountByType = is.reduce(reducer, { value: 0, vat: 0 });
