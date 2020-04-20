@@ -16,7 +16,7 @@ const dataDir = join(__dirname, '../data');
 const invoices =
   safeLoad(readFileSync(join(dataDir, 'invoices.yaml')), 'utf8') || [];
 const credits =
-  safeLoad(readFileSync(join(dataDir, 'invoices.yaml')), 'utf8') || [];
+  safeLoad(readFileSync(join(dataDir, 'credits.yaml')), 'utf8') || [];
 
 const documents = [...invoices, ...credits];
 
@@ -43,9 +43,9 @@ function reducer(acc, cur) {
 
 const total = documents.reduce(reducer, { value: 0, vat: 0 });
 
-const entries = keys.map((key) => {
+const entries = keys.map(key => {
   const is = documents.filter(
-    (i) => parseDate(i.date).toFormat('MM/yyyy') === key,
+    i => parseDate(i.date).toFormat('MM/yyyy') === key,
   );
 
   const amountByType = is.reduce(reducer, { value: 0, vat: 0 });
