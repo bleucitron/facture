@@ -20,11 +20,11 @@ const credits =
 
 const documents = [...invoices, ...credits];
 
-const keys = makeDateKeys(documents);
-
 documents.sort((d1, d2) => {
   return -1 * (parseDate(d2.date) - parseDate(d1.date));
 });
+
+const keys = makeDateKeys(documents);
 
 function reducer(acc, cur) {
   const { value: accValue, vat: accVat } = acc;
