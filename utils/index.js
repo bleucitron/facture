@@ -57,7 +57,7 @@ export function prompt(clients, items) {
       type: 'list',
       name: 'type',
       message: 'Invoice or Credit ?',
-      choices: Object.values(docType).map((type) => ({
+      choices: Object.values(docType).map(type => ({
         name: type,
         value: type,
       })),
@@ -67,27 +67,27 @@ export function prompt(clients, items) {
       type: 'list',
       name: 'client',
       message: 'What is the client?',
-      choices: Object.values(clients).map((client) => ({
+      choices: Object.values(clients).map(client => ({
         name: client.name,
         value: client.code,
       })),
-      filter: (code) => clients[code],
+      filter: code => clients[code],
     },
     {
       type: 'list',
       name: 'vat',
       message: 'TVA ?',
-      choices: [0, 20].map((value) => ({
+      choices: [0, 20].map(value => ({
         name: value,
         value: value,
       })),
       default: 1,
-      filter: (vat) => vat / 100,
+      filter: vat => vat / 100,
     },
     {
       type: 'confirm',
       name: 'ok',
-      message: (answers) => {
+      message: answers => {
         displayItems(answers, items);
         return 'Is this ok?';
       },
@@ -157,11 +157,12 @@ export function logYear(year, value, vat) {
 
 export function makeDateKeys(all) {
   const first = parseDate(all[0].date);
-  const last = parseDate(all[all.length - 1].date);
+
+  const now = DateTime.now();
 
   let current = first;
   let currentKey = first.toFormat('yyyy/MM');
-  const lastKey = last.toFormat('yyyy/MM');
+  const lastKey = now.toFormat('yyyy/MM');
 
   const keys = [];
 
