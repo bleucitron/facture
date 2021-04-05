@@ -109,7 +109,7 @@ function evaluate(amount, rate) {
   return Math.round((amount * rate) / 100);
 }
 
-function calculateRates(value, vat, _chalk = chalk) {
+export function calculateRates(value, vat, _chalk = chalk) {
   // const cotisation = chalk.grey(`5,5%: ${evaluate(value, 5.5)}€`);
   const cotisation = _chalk.grey(`16,5%: ${evaluate(value, 16.5)}€`);
   const impots = _chalk.grey(`2,2%: ${evaluate(value, 2.2)}€`);
@@ -126,43 +126,14 @@ export function parseDate(date) {
   return DateTime.fromFormat(date, 'dd/MM/yyyy');
 }
 
-export function logAmount(text, value, vat) {
-  const { cotisation, impots, tva } = calculateRates(value, vat);
-  const amount = chalk.blue(`${formatPrice(value)}`);
-
-  console.log(`${text}: ${amount} / ${cotisation} / ${impots} / ${tva}`);
-}
-
-export function logQuarter(quarter, year, value, vat) {
-  const { cotisation, impots, tva } = calculateRates(value, vat, chalk.bold);
-  const amount = chalk.bold.green(`${formatPrice(value)}`);
-
-  console.log(
-    `${year} Q${quarter}: ${amount} / ${cotisation} / ${impots} / ${tva}`,
-  );
-  console.log();
-}
-
-export function logYear(year, value, vat) {
-  const { cotisation, impots, tva } = calculateRates(
-    value,
-    vat,
-    chalk.bold.underline,
-  );
-  const amount = chalk.bold.underline.green(`${formatPrice(value)}`);
-
-  console.log(`${year}: ${amount} / ${cotisation} / ${impots} / ${tva}`);
-  console.log();
-}
-
-export function makeDateKeys(all) {
-  const first = parseDate(all[0].date);
-
+export function makeDateKeys(from, to = undefined) {
+  const first = parseDate(from);
   const now = DateTime.now();
+  const last = to ? parseDate(to) : now;
 
   let current = first;
   let currentKey = first.toFormat('yyyy/MM');
-  const lastKey = now.toFormat('yyyy/MM');
+  const lastKey = last.toFormat('yyyy/MM');
 
   const keys = [];
 
@@ -170,6 +141,8 @@ export function makeDateKeys(all) {
     keys.push(current.toFormat('MM/yyyy'));
     current = current.plus({ months: 1 });
     currentKey = current.toFormat('yyyy/MM');
+
+    if (current > now) break;
   }
 
   return keys;
