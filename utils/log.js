@@ -111,24 +111,20 @@ export function logValues(documents, year = undefined) {
       accQuarterVat = 0;
     }
 
-    if (!year && month === 12) {
+    if (month === 12) {
       logYear(curYear, accYearValue, accYearVat);
       accYearValue = 0;
       accYearVat = 0;
     }
   });
 
-  if (year) {
-    logYear(curYear, accYearValue, accYearVat);
-  } else {
-    if (accQuarterValue !== 0) {
-      logQuarter(curQuarter, curYear, accQuarterValue, accQuarterVat);
-    }
-
-    if (accYearValue !== 0) {
-      logYear(curYear, accYearValue, accYearVat);
-    }
-
-    logAmount('Total', total.value, total.vat);
+  if (accQuarterValue !== 0) {
+    logQuarter(curQuarter, curYear, accQuarterValue, accQuarterVat);
   }
+
+  if (accYearValue !== 0) {
+    logYear(curYear, accYearValue, accYearVat);
+  }
+
+  logAmount('Total', total.value, total.vat);
 }
