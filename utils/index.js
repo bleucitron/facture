@@ -127,7 +127,8 @@ export function parseDate(date) {
 }
 
 export function makeDateKeys(from, to = undefined) {
-  const first = parseDate(from);
+  const { year, month } = parseDate(from);
+  const first = DateTime.fromObject({ year, month });
   const now = DateTime.now();
   const last = to ? parseDate(to) : now;
 
