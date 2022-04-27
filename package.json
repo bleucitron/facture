@@ -11,7 +11,7 @@
     "build:jsx": "babel src/*.jsx -d build --source-maps inline",
     "watch:jsx": "babel src/*.jsx -d build --watch --source-maps inline --verbose",
     "watch:js": "npm-watch generate:watch",
-    "pregenerate": "npm run build --silent",
+    "pregenerate": "npm run build --silent > /dev/null",
     "generate": "node -r esm build/index.js",
     "postgenerate": "./backup.sh && npm run book",
     "pregenerate:debug": "npm run build",
