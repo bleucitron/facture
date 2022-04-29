@@ -19,7 +19,7 @@ function fromYaml(file) {
 
 const provider = fromYaml('./data/provider.yaml');
 const clients = fromYaml('./data/clients.yaml');
-const items = fromYaml('./data/items.yaml');
+const { items, expenses } = fromYaml('./data/items.yaml');
 const invoices = fromYaml('./data/invoices.yaml') || [];
 const credits = fromYaml('./data/credits.yaml') || [];
 const quotes = fromYaml('./data/quotes.yaml') || [];
@@ -30,7 +30,7 @@ program
   .parse(process.argv);
 
 const defaultOptions = {
-  type: docType.quote,
+  type: docType.invoice,
   client: clients['HUM'],
   vat: 20 / 100,
   ok: true,
@@ -38,7 +38,7 @@ const defaultOptions = {
 
 const init = program.debug
   ? Promise.resolve(defaultOptions)
-  : prompt(clients, items);
+  : prompt(clients, items, expenses);
 
 init.then(({ type, client, vat, ok }) => {
   if (!ok) return;
@@ -100,6 +100,7 @@ init.then(({ type, client, vat, ok }) => {
     <Doc
       provider={provider}
       items={items}
+      expenses={expenses}
       client={client}
       doc={doc}
       type={type}

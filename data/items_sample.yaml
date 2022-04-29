@@ -1,7 +1,15 @@
 # Items description
-- description: Light saber
-  unitPrice: 2000.
-  quantity: 1
-- description: Another very expensive item with a very long text. Another very expensive item with a very long text. Another very expensive item with a very long text. Another very expensive item with a very long text. Another very expensive item with a very long text. Another very expensive item with a very long text.
-  unitPrice: 10000.0
-  quantity: 3
+items:
+  - description: Light saber
+    unitPrice: 2000.
+    quantity: 1
+  - description: Another very expensive item with a very long text. Another very expensive item with a very long text. Another very expensive item with a very long text. Another very expensive item with a very long text. Another very expensive item with a very long text. Another very expensive item with a very long text.
+    unitPrice: 10000.0
+    quantity: 3
+expenses:
+  - description: Jedi beer
+    unitPrice: 10.
+    quantity: 10
+  - description: Wookie hot night
+    unitPrice: 100.0
+    quantity: 3

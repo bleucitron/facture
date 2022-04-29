@@ -20,7 +20,7 @@ export const docTypeText = {
   quote: 'Devis',
 };
 
-function displayItems(answers, items) {
+function displayItems(answers, items, expenses) {
   const { type, client, vat } = answers;
 
   items.forEach((item, i) => {
@@ -39,19 +39,32 @@ function displayItems(answers, items) {
     0,
   );
 
+  const totalExpenses = expenses.reduce(
+    (acc, { unitPrice, quantity }) => acc + unitPrice * quantity,
+    0,
+  );
+
   const qty = items.length.toString().bold;
   const price = `${round(total).toString()}€`.bold;
+  const qtyExp = expenses.length.toString().bold;
+  const priceExp = `${round(totalExpenses).toString()}€`.bold;
+  console.log();
+  console.log(`The client is ${client.name}.`);
   console.log();
   console.log(`This ${type} has ${qty} items, for a total of ${price}.`);
   console.log(`The VAT is ${vat * 100}%.`);
   console.log();
-  console.log(`The client is ${client.name}.`);
-  console.log();
+  if (expenses) {
+    console.log(
+      `There are ${qtyExp} expenses items, for a total of ${priceExp}.`,
+    );
+    console.log();
+  }
 }
 
 const format = formatDefaultLocale(locale).format;
 
-export function prompt(clients, items) {
+export function prompt(clients, items, expenses) {
   return inquirer.prompt([
     {
       type: 'list',
@@ -88,7 +101,7 @@ export function prompt(clients, items) {
       type: 'confirm',
       name: 'ok',
       message: answers => {
-        displayItems(answers, items);
+        displayItems(answers, items, expenses);
         return 'Is this ok?';
       },
       default: true,

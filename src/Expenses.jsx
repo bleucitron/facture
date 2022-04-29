@@ -4,10 +4,10 @@ import Markdown from 'markdown-to-jsx';
 
 import { formatPrice, round } from '../utils';
 
-const Items = ({ items, type, vat }) => {
+const Expenses = ({ items, type }) => {
   const Headers = () => (
     <h2 className={classnames('headers', type)}>
-      <div className="description">Prestations</div>
+      <div className="description">Débours</div>
       <div className="price">Prix unitaire</div>
       <div className="quantity">Quantité</div>
       <div className="price">Prix</div>
@@ -23,34 +23,24 @@ const Items = ({ items, type, vat }) => {
     </div>
   ));
 
-  const totalHT = round(
+  const totalExp = round(
     items.reduce(
       (acc, { unitPrice, quantity }) => acc + unitPrice * quantity,
       0,
     ),
   );
-  const totalVAT = round(totalHT * vat);
-  const totalTTC = round(totalHT * (1 + vat));
 
   const Totals = () => (
     <div className="totals">
-      <div className="ht">
-        <div>Total HT</div>
-        <div className="price">{formatPrice(totalHT)}</div>
-      </div>
-      <div className={`taxes ${!vat && 'zero'}`}>
-        <div>TVA {vat ? `${vat * 100}%` : ''}</div>
-        <div className="vat">{vat ? formatPrice(totalVAT) : 'Exonérée'}</div>
-      </div>
       <div className="ttc">
-        <div>Total TTC</div>
-        <div className="price">{formatPrice(totalTTC)}</div>
+        <div>Total Débours</div>
+        <div className="price">{formatPrice(totalExp)}</div>
       </div>
     </div>
   );
 
   return (
-    <section className="items">
+    <section className="expenses">
       <Headers />
       {myItems}
       <Totals />
@@ -58,4 +48,4 @@ const Items = ({ items, type, vat }) => {
   );
 };
 
-export default Items;
+export default Expenses;
