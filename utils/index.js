@@ -64,7 +64,7 @@ function displayItems(answers, items, expenses) {
 
 const format = formatDefaultLocale(locale).format;
 
-export function prompt(clients, items, expenses) {
+export function prompt(clients, items, expenses = []) {
   return inquirer.prompt([
     {
       type: 'list',
