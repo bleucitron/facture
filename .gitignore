@@ -6,4 +6,5 @@ data/items.yaml
 data/provider.yaml
 data/credits.yaml
 data/quotes.yaml
+livre.csv
 *.pdf

@@ -13,7 +13,7 @@
     "watch:js": "npm-watch generate:watch",
     "pregenerate": "npm run build --silent > /dev/null",
     "generate": "node -r esm build/index.js",
-    "postgenerate": "./backup.sh && npm run book",
+    "postgenerate": "npm run book && ./backup.sh",
     "pregenerate:debug": "npm run build",
     "generate:debug": "node -r esm build/index.js -d",
     "generate:watch": "node -r esm build/index.js -d",

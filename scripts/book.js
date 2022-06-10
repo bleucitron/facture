@@ -1,12 +1,11 @@
 import { join } from 'path';
-import rc from 'rc';
 import stringify from 'csv-stringify';
 import { readFileSync, writeFileSync } from 'fs';
 import { safeLoad } from 'js-yaml';
 
 import { parseDate, round } from '../utils';
 
-const dir = rc('facture').outputDir;
+const rootDir = join(__dirname, '..');
 const dataDir = join(__dirname, '../data');
 
 const invoices =
@@ -21,7 +20,7 @@ const documents = [...invoices, ...credits]
     if (output === 0) return d2.id - d1.id;
     return output;
   })
-  .map((d) => ({ ...d, priceTTC: round(d.priceHT * (1 + d.vat)) }));
+  .map(d => ({ ...d, priceTTC: round(d.priceHT * (1 + d.vat)) }));
 
 let headers = new Set(Object.keys(documents[documents.length - 1]));
 
@@ -35,5 +34,5 @@ stringify(
     header: true,
     columns: headers,
   },
-  (err, data) => writeFileSync(join(dir, 'livre.csv'), data),
+  (err, data) => writeFileSync(join(rootDir, 'livre.csv'), data),
 );
