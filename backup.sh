@@ -1,3 +1,3 @@
-rsync -avr --exclude=*_sample* data/* ~/Documents/MicroEntreprise/backups
+rsync -r --exclude=*_sample* data/* ~/Documents/MicroEntreprise/backups
 
-rsync -avr livre.csv ~/Documents/MicroEntreprise/livre.csv
+rsync -r livre.csv ~/Documents/MicroEntreprise
